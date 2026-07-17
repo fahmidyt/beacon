@@ -2,6 +2,10 @@
 
 Beacon is an app for peace of mind. The idea is simple: you share your location live, drop checkpoints, and ~~even send heart rate data~~ to the people you trust. So they always know you're okay, and if something's off, they can move fast.
 
+![Beacon demo — user and contact side by side](docs/assets/beacon-sidebyside-demo.gif)
+
+Left: Sarah's phone. Right: Mom's phone (the contact). When Sarah hits panic, Mom sees an emergency alert in real time.
+
 ## Why Beacon
 
 Think about it for a second. Almost everyone has that one person who really wants to know when they're in trouble. Could be a parent, a partner, a roommate. The problem is, staying in touch while you're out on the road, on a night out, or walking home alone usually means typing "I'm here" or "almost home" by hand. Easy to forget. And worse, when it's an actual emergency, forget about typing, you might not even be able to reach your phone.
