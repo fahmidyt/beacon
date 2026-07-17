@@ -1,0 +1,39 @@
+@media (max-width: 450px) {
+  html,
+  body,
+  #root,
+  .demo-stage {
+    width: 100%;
+    min-height: 100%;
+    background: var(--paper);
+  }
+
+  .demo-stage {
+    display: block;
+    padding: 0;
+  }
+
+  .phone {
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .ios,
+  .home-indicator,
+  .presenter {
+    display: none !important;
+  }
+
+  .viewport {
+    height: 100dvh;
+  }
+
+  .page {
+    min-height: 100dvh;
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+}

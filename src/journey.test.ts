@@ -1,0 +1,2 @@
+import{describe,it,expect}from'vitest';import{initialSession,reduceSession}from'../shared/session'
+describe('Main Frames session',()=>{it('progresses through check-in panic and arrival',()=>{let s=initialSession();s=reduceSession(s,{type:'patch',patch:{phase:'active',status:'safe'}});s=reduceSession(s,{type:'tick',minutes:7});expect(s.phase).toBe('checkin');s=reduceSession(s,{type:'panic'});expect(s.activity.at(-1)?.label).toBe('Panic alert sent');s=reduceSession(s,{type:'arrive'});expect(s.status).toBe('arrived')})})

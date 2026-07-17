@@ -1,0 +1,2 @@
+import{render,screen}from'@testing-library/react';import{describe,it,expect,vi}from'vitest';import{App}from'./App'
+describe('Beacon Main Frames',()=>{it('renders onboarding',()=>{vi.stubGlobal('WebSocket',class{onmessage:any;onclose:any;close(){}});vi.stubGlobal('fetch',()=>Promise.reject());render(<App/>);expect(screen.getByText('Beacon')).toBeInTheDocument();expect(screen.getByRole('button',{name:'Get started'})).toBeVisible()})})
