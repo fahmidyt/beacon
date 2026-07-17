@@ -1,0 +1,11 @@
+{
+  "name":"beacon-demo","private":true,"version":"2.0.0","type":"module",
+  "scripts":{
+    "dev":"concurrently -k -n api,web -c green,cyan \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server":"tsx watch server/index.ts","dev:client":"vite --host 0.0.0.0",
+    "build":"npm run typecheck:server && tsc -b && vite build","typecheck:server":"tsc -p tsconfig.server.json --noEmit",
+    "test":"vitest run","test:e2e":"playwright test"
+  },
+  "dependencies":{"@vitejs/plugin-react":"latest","concurrently":"latest","express":"latest","qrcode":"latest","qrcode-terminal":"latest","react":"latest","react-dom":"latest","tsx":"latest","typescript":"latest","vite":"latest","ws":"latest"},
+  "devDependencies":{"@playwright/test":"latest","@testing-library/jest-dom":"latest","@testing-library/react":"latest","@types/express":"latest","@types/node":"latest","@types/qrcode":"latest","@types/qrcode-terminal":"latest","@types/react":"latest","@types/react-dom":"latest","@types/ws":"latest","jsdom":"latest","vitest":"latest"}
+}
