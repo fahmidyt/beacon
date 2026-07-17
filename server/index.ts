@@ -1,2 +1,33 @@
-import express from'express';import{createServer}from'node:http';import{WebSocketServer,WebSocket}from'ws';import{SessionStore}from'./session-store.js';import type{SessionEvent}from'../shared/session.js';import{printLinks}from'./network.js'
-const app=express(),server=createServer(app),store=new SessionStore(),clients=new Map<string,Set<WebSocket>>();app.use(express.json());app.get('/api/sessions/:id',(req,res)=>res.json(store.get(req.params.id)));app.post('/api/sessions/:id/events',(req,res)=>{const e=req.body as SessionEvent;if(!e||!['patch','phase','tick','panic','arrive','reset'].includes(e.type))return res.status(400).json({error:'Invalid event'});const state=store.apply(req.params.id,e);for(const ws of clients.get(req.params.id)??[])if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify(state));res.json(state)});const wss=new WebSocketServer({server});wss.on('connection',(ws,req)=>{const id=req.url?.split('/').pop()||'';if(!clients.has(id))clients.set(id,new Set());clients.get(id)!.add(ws);ws.send(JSON.stringify(store.get(id)));ws.on('close',()=>clients.get(id)?.delete(ws))});server.listen(8787,'0.0.0.0',()=>printLinks())
+import express from "express";
+import { createServer } from "node:http";
+import { WebSocketServer, WebSocket } from "ws";
+import { SessionStore } from "./session-store.js";
+import type { SessionEvent } from "../shared/session.js";
+import { printLinks } from "./network.js";
+const app = express(),
+  server = createServer(app),
+  store = new SessionStore(),
+  clients = new Map<string, Set<WebSocket>>();
+app.use(express.json());
+app.get("/api/sessions/:id", (req, res) => res.json(store.get(req.params.id)));
+app.post("/api/sessions/:id/events", (req, res) => {
+  const e = req.body as SessionEvent;
+  if (
+    !e ||
+    !["patch", "phase", "tick", "panic", "arrive", "reset"].includes(e.type)
+  )
+    return res.status(400).json({ error: "Invalid event" });
+  const state = store.apply(req.params.id, e);
+  for (const ws of clients.get(req.params.id) ?? [])
+    if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(state));
+  res.json(state);
+});
+const wss = new WebSocketServer({ server });
+wss.on("connection", (ws, req) => {
+  const id = req.url?.split("/").pop() || "";
+  if (!clients.has(id)) clients.set(id, new Set());
+  clients.get(id)!.add(ws);
+  ws.send(JSON.stringify(store.get(id)));
+  ws.on("close", () => clients.get(id)?.delete(ws));
+});
+server.listen(8787, "0.0.0.0", () => printLinks());
